@@ -10,6 +10,7 @@ namespace BankSystem.Web.Servicios
         Task<bool> Editar(BankAccount account);
         Task<bool> Eliminar(int IdAccount);
         Task<BankAccount> GetIdUser(int IdUser);
+        Task<BankAccount> EditarCantidad(int IdUser, float AccounAmount);
         
     }
 }

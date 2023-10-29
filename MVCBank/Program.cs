@@ -1,4 +1,5 @@
 using BankSystem.Web.Servicios;
+using MVCBank.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IServicio_API_User, Servicio_API_User>();
 builder.Services.AddScoped<IServicio_API_BAccount, Servicio_API_BAccount>();
+builder.Services.AddScoped<IServicio_API_Transferencia, Servicio_API_Transferencia>();
+
 
 var app = builder.Build();
 

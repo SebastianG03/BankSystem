@@ -11,6 +11,7 @@ namespace APIBankService.Data
 
         public DbSet<User> user { get; set; }
         public DbSet<BankAccount> bankAccount { get; set; }
+        public DbSet<Transferencia> transferencia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

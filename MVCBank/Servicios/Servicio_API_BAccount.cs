@@ -29,6 +29,8 @@ namespace BankSystem.Web.Servicios
             return response.IsSuccessStatusCode;
         }
 
+        
+
         public async Task<bool> Guardar(BankAccount account)
         {
             var client = new HttpClient();
@@ -73,8 +75,24 @@ namespace BankSystem.Web.Servicios
             return null;
         }
 
-       
+        public async Task<BankAccount> EditarCantidad(int IdUser, float AccounAmount)
+        {
+            BankAccount account = null;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.PutAsJsonAsync($"http://localhost:5142/api/BankAccount/user/{IdUser}", AccounAmount);
+            if (response.IsSuccessStatusCode)
+            {
+                account = await response.Content.ReadAsAsync<BankAccount>();
+
+                Console.WriteLine("co" + account.IdUser);
+                return account;
+            }
+
+            return null;
+        }
+
     }
+    
 
 
 }

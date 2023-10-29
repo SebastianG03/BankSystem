@@ -85,6 +85,22 @@ namespace APIBankService.Controllers
 
         }
 
+        [HttpPut("user/{IdAccount}")]
+        public async Task<IActionResult> Put(int IdAccount, [FromBody] float AccountAmount)
+        {
+            BankAccount account1 = await _db.bankAccount.FirstOrDefaultAsync(x => x.IdAccount == IdAccount);
+            if (account1 != null)
+            {
+
+                account1.AccountAmount = AccountAmount;
+                _db.bankAccount.Update(account1);
+                await _db.SaveChangesAsync();
+                return Ok(account1);
+            }
+            return BadRequest("No se encuentra la cuenta");
+
+        }
+
         // DELETE api/<ValuesController>/5
         [HttpDelete("{IdAccount}")]
         public async Task<IActionResult> DeleteAsync(int IdAccount)

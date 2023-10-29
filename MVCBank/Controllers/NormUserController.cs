@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MVCBank.Models;
 using BankSystem.Web.Servicios;
+using MVCBank.Servicios;
+using System.Runtime.CompilerServices;
 
 namespace MVCBank.Controllers
 {
@@ -9,10 +11,13 @@ namespace MVCBank.Controllers
     {
         private readonly IServicio_API_User servicioAPI;
         private readonly IServicio_API_BAccount servicio_APIBAccount;
-        public NormUserController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount)
+        private readonly IServicio_API_Transferencia transferenciaAPI;
+        public NormUserController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount, IServicio_API_Transferencia transferenciaAPI)
         {
             this.servicioAPI = servicioAPI;
             this.servicio_APIBAccount = servicio_APIBAccount;
+            this.transferenciaAPI = transferenciaAPI;
+
         }
 
         // GET: NormUserController
@@ -55,6 +60,17 @@ namespace MVCBank.Controllers
             {
                 Console.WriteLine("con" + account.IdUser);
                 return View(account);
+            }
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Details1(int IdAccount)
+        {
+
+            var account = await servicio_APIBAccount.Obtener(IdAccount);
+            if (account != null)
+            {
+                Console.WriteLine("con" + account.IdUser);
+                return View("Details", account);
             }
             return RedirectToAction("Index");
         }
@@ -130,16 +146,28 @@ namespace MVCBank.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Edit(Transferencia transfer)
+
         {
+            Transferencia transfer1=null;
             if (transfer != null)
             {
+
+                transfer.IdTransfer = 0;
                 transfer.DateIssue = DateTime.Now;
                 BankAccount accountSender = await servicio_APIBAccount.Obtener(transfer.IdAccountSender);
                 BankAccount accountReceiver = await servicio_APIBAccount.Obtener(transfer.IdAccountReceiver);
-
+                Console.WriteLine(transfer.ToString+ "accountS");
+                Console.WriteLine(accountSender.AccountAmount+"accountS");
+                Console.WriteLine(accountReceiver.AccountAmount + "accountR");
                 if (accountReceiver != null)
                 {
-                    accountReceiver.AccountAmount = transfer.Amount;
+                    transfer1 = transfer;
+                    bool trans=true;
+                    BankAccount test = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountReceiver.AccountAmount + transfer.Amount);
+                    BankAccount test2 = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountSender.AccountAmount - transfer.Amount);
+                    _ = await transferenciaAPI.Crear(transfer);
+                    Console.WriteLine(test.AccountAmount + "Test");
+                    Console.WriteLine(test2.AccountAmount + "Test");
                     Console.WriteLine("Transferencia emitida: ");
                 }
 
@@ -159,7 +187,14 @@ namespace MVCBank.Controllers
         {
             return View();
         }
+        // Transferencia
+        public async Task<IActionResult> Transferencias(int IdAccount)
+        {
+            List<Transferencia> transfer = await transferenciaAPI.Transferencias(IdAccount);
+            ViewData["IdAccount"] = IdAccount;
+            return View("Transferencias", transfer);
 
+        }
         // POST: NormUserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

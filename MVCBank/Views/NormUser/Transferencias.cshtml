@@ -1,0 +1,50 @@
+﻿@model List<Transferencia>
+@{
+    int? IdAccount = ViewData["IdAccount"] as int?;
+}
+
+<link rel="stylesheet" href="~/css/bootstrap.min.css" />
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+
+<body>
+    @foreach (var transfer in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                Detalles de la transferencia
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Transferencia ID: @transfer.IdTransfer</h5>
+                <div class="card-text">
+                    <div class="modal-body">
+                        <div class="col-sm-6">
+                            <label>ID de la cuenta remitente:</label>
+                            <input class="form-control" asp-for="@transfer.IdAccountSender" readonly />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>ID de la cuenta receptora:</label>
+                            <input class="form-control" asp-for="@transfer.IdAccountReceiver" readonly />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Monto:</label>
+                            <input class="form-control" asp-for="@transfer.Amount" readonly />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Fecha de emisión:</label>
+                            <input class="form-control" asp-for="@transfer.DateIssue" readonly />
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    }
+</body>
+
+<a class="btn btn-danger"
+   asp-controller="NormUser"
+   asp-action="Details1"
+   asp-route-IdAccount="@IdAccount">
+    Volver
+</a>
