@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace APIBankService.Migrations
 {
     /// <inheritdoc />
-    public partial class Cargar : Migration
+    public partial class initial5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

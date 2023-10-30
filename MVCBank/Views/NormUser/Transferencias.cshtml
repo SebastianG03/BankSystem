@@ -3,7 +3,6 @@
     int? IdAccount = ViewData["IdAccount"] as int?;
 }
 
-<link rel="stylesheet" href="~/css/bootstrap.min.css" />
 <link href="~/css/site.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
 
@@ -40,11 +39,6 @@
             </div>
         </div>
     }
+    <a class="btn btn-danger" style="margin-top: 2rem;" asp-controller="NormUser" asp-action="DetailsBack" asp-route-IdAccount="@IdAccount"> Volver </a>
 </body>
 
-<a class="btn btn-danger"
-   asp-controller="NormUser"
-   asp-action="Details1"
-   asp-route-IdAccount="@IdAccount">
-    Volver
-</a>

@@ -3,7 +3,6 @@
     ViewData["Title"] = "Iniciar Sesion";
 }
 
-<link rel="stylesheet" href="~/css/bootstrap.min.css" />
 <link href="~/css/site.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
 
@@ -17,7 +16,7 @@
             <label>Contraseña:</label>
             <input asp-for="Password" class="form-control" type="password" required />
         </div>
-        <div>
+        <div style="margin-top: 2rem;">
             <button type="submit" asp-action="Index" class="btn btn-success">Ingresar</button>
             <a asp-action="Index" asp-controller="Home" class="btn btn-danger">Regresar</a>
         </div>

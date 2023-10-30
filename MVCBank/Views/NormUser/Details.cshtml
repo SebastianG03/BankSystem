@@ -4,7 +4,6 @@
     ViewData["Title"] = "Estado de cuenta";
 }
 
-<link rel="stylesheet" href="~/css/bootstrap.min.css" />
 <link href="~/css/site.css" rel="stylesheet" />
 <link href="~/css/style.css" rel="stylesheet" />
 
@@ -29,8 +28,8 @@
         </div>
     </div>
 
-    <div>
-        <a type="button" asp-action="Edit" asp-route-IdAccount="@Model.IdAccount" >Transferencias</a>
-        <a type="button" asp-action="Transferencias" asp-route-IdAccount="@Model.IdAccount" >Lista de Transferencias</a>
-        <a asp-action="Index" asp-controller="Home" >Cerrar Sesión</a>
+    <div class="btn-group" style="margin-top: 2rem;">
+        <a type="button" asp-action="Edit" asp-route-IdAccount="@Model.IdAccount" class="btn btn-success" >Transferencias</a>
+        <a type="button" asp-action="Transferencias" asp-route-IdAccount="@Model.IdAccount" class="btn btn-primary" >Lista de Transferencias</a>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-danger">Cerrar Sesión</a>
     </div>

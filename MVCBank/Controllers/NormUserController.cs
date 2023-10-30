@@ -63,7 +63,9 @@ namespace MVCBank.Controllers
             }
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Details1(int IdAccount)
+
+
+        public async Task<IActionResult> DetailsBack(int IdAccount)
         {
 
             var account = await servicio_APIBAccount.Obtener(IdAccount);
@@ -72,19 +74,6 @@ namespace MVCBank.Controllers
                 Console.WriteLine("con" + account.IdUser);
                 return View("Details", account);
             }
-            return RedirectToAction("Index");
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Details(int IdAccount)
-        {
-            var account = await servicio_APIBAccount.Obtener(IdAccount);
-            if (account != null)
-            {
-                return View("Edit", account);
-            }
-            Console.WriteLine("Fallo");
             return RedirectToAction("Index");
         }
 
@@ -156,8 +145,8 @@ namespace MVCBank.Controllers
                 transfer.DateIssue = DateTime.Now;
                 BankAccount accountSender = await servicio_APIBAccount.Obtener(transfer.IdAccountSender);
                 BankAccount accountReceiver = await servicio_APIBAccount.Obtener(transfer.IdAccountReceiver);
-                Console.WriteLine(transfer.ToString+ "accountS");
-                Console.WriteLine(accountSender.AccountAmount+"accountS");
+                Console.WriteLine(transfer.ToString + "accountS");
+                Console.WriteLine(accountSender.AccountAmount +"accountS");
                 Console.WriteLine(accountReceiver.AccountAmount + "accountR");
                 if (accountReceiver != null)
                 {
@@ -165,7 +154,7 @@ namespace MVCBank.Controllers
                     bool trans=true;
                     BankAccount test = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountReceiver.AccountAmount + transfer.Amount);
                     BankAccount test2 = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountSender.AccountAmount - transfer.Amount);
-                    _ = await transferenciaAPI.Crear(transfer);
+                    await transferenciaAPI.Crear(transfer);
                     Console.WriteLine(test.AccountAmount + "Test");
                     Console.WriteLine(test2.AccountAmount + "Test");
                     Console.WriteLine("Transferencia emitida: ");
