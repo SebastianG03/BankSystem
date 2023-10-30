@@ -10,8 +10,5 @@ namespace MVCBank.Servicios
         Task<bool> Crear(Transferencia transfer);
         Task<bool> Editar(Transferencia transfer);
         Task<bool> Eliminar(int IdTransfer);
-
-
-        
     }
 }

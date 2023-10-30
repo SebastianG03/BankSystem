@@ -12,7 +12,8 @@ namespace MVCBank.Controllers
         private readonly IServicio_API_User servicioAPI;
         private readonly IServicio_API_BAccount servicio_APIBAccount;
         private readonly IServicio_API_Transferencia transferenciaAPI;
-        public NormUserController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount, IServicio_API_Transferencia transferenciaAPI)
+        public NormUserController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount,
+            IServicio_API_Transferencia transferenciaAPI)
         {
             this.servicioAPI = servicioAPI;
             this.servicio_APIBAccount = servicio_APIBAccount;
@@ -87,11 +88,11 @@ namespace MVCBank.Controllers
         public async Task<IActionResult> Create(User user)
         {
             user.IdUser = 0;
-            user.Phone = "strddsfasd";
-            user.DNI = "strdddd";
-            user.Name = "strsssds";
+            user.Name = "string";
+            user.Phone = "stringstri";
+            user.DNI= "string";
 
-            user.Role = user.Role.Equals("Cliente") ? "client" : "adm";
+            user.Role = user.Role.Equals("Cliente") ? "client" : "admin";
 
             var response = await servicioAPI.Crear(user);
 
