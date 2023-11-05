@@ -138,10 +138,9 @@ namespace MVCBank.Controllers
         public async Task<IActionResult> Edit(Transferencia transfer)
 
         {
-            Transferencia transfer1=null;
+            Transferencia transfer1 = null;
             if (transfer != null)
             {
-
                 transfer.IdTransfer = 0;
                 transfer.DateIssue = DateTime.Now;
                 BankAccount accountSender = await servicio_APIBAccount.Obtener(transfer.IdAccountSender);
@@ -153,20 +152,16 @@ namespace MVCBank.Controllers
                 {
                     transfer1 = transfer;
                     bool trans=true;
-                    BankAccount test = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountReceiver.AccountAmount + transfer.Amount);
-                    BankAccount test2 = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount, accountSender.AccountAmount - transfer.Amount);
+                    BankAccount test = await servicio_APIBAccount.EditarCantidad(accountReceiver.IdAccount,
+                        accountReceiver.AccountAmount + transfer.Amount);
+                    BankAccount test2 = await servicio_APIBAccount.EditarCantidad(accountSender.IdAccount,
+                        accountSender.AccountAmount - transfer.Amount);
                     await transferenciaAPI.Crear(transfer);
                     Console.WriteLine(test.AccountAmount + "Test");
                     Console.WriteLine(test2.AccountAmount + "Test");
                     Console.WriteLine("Transferencia emitida: ");
+                    return View("Details", accountSender);
                 }
-
-                Console.WriteLine("Transferencia realizandose..." + accountReceiver.AccountAmount);
-                //await servicio_APIBAccount.Editar(accountSender);
-                bool success = await servicio_APIBAccount.Editar(accountReceiver);
-                Console.WriteLine("Transferencia realizada..." + success);
-
-                return View("Details", accountSender);
             }
             Console.WriteLine("Operacion fallida");
             return BadRequest("No se pudo realizar la accion");
