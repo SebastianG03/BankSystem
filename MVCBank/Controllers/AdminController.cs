@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MVCBank.Models;
+using MVCBank.Servicios;
+using System.Security.Principal;
 
 namespace MVCBank.Controllers
 {
@@ -9,10 +11,12 @@ namespace MVCBank.Controllers
     {
         private readonly IServicio_API_User servicioAPI;
         private readonly IServicio_API_BAccount servicio_APIBAccount;
-        public AdminController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount)
+        private readonly IServicio_API_Transferencia servicio_APITransferencia;
+        public AdminController(IServicio_API_User servicioAPI, IServicio_API_BAccount servicio_APIBAccount, IServicio_API_Transferencia servicio_APITransferencia)
         {
             this.servicioAPI = servicioAPI;
             this.servicio_APIBAccount = servicio_APIBAccount;
+            this.servicio_APITransferencia = servicio_APITransferencia;
         }
 
 
@@ -47,8 +51,24 @@ namespace MVCBank.Controllers
             return BadRequest("No se pudo obtener el usuario");
         }
 
+        // GET: AdminController/Create
+        public async Task<IActionResult> DetailsTransferencia(int IdUser)
+        {
+            User userSender = await servicioAPI.Obtener(IdUser);
+            BankAccount bankAccountSender = await servicio_APIBAccount.GetIdUser(IdUser);
+            if(bankAccountSender != null) {
+                List<Transferencia> transfer = await servicio_APITransferencia.Transferencias(bankAccountSender.IdAccount);
+
+
+                ViewData["Sender"] = userSender;
+                ViewData["IdAccountSender"] = bankAccountSender.IdAccount;
+                return View("DetailsTransferencias", transfer);
+            }
+            return BadRequest("No se pudieron obtener las transferencias");
+        }
+
         // POST: AdminController/Create
-        
+
 
         // GET: AdminController/Edit/5
         /*public async Task<ActionResult> Edit(int IdUser)
@@ -65,7 +85,7 @@ namespace MVCBank.Controllers
 
 
         // POST: AdminController/Edit/5
-        
+
 
         // GET: AdminController/Delete/5
 

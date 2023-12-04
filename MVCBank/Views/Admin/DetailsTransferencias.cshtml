@@ -1,0 +1,55 @@
+﻿@model List<Transferencia>
+
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+
+@{
+    User? sender = ViewData["Sender"] as User;
+    int? idAccountSender = ViewData["IdAccountSender"] as int?;
+    
+
+}
+
+<body>
+
+    @foreach (var transfer in Model)
+    {
+        <div class="card">
+            <div class="card-header">Detalles de la transferencia</div>
+            <div class="card-body">
+                <h5 class="card-title">Transferencia ID: @transfer.IdTransfer</h5>
+                <div class="card-text">
+                    <div class="modal-body">
+                        <div class="col-sm-6">
+                            <label>ID de la cuenta remitente:</label>
+                            <input class="form-control" asp-for="@transfer.IdAccountSender" readonly />
+                        </div>
+                        @{
+                            if(transfer.IdAccountSender == idAccountSender)
+                            {
+                                <div class="col-sm-6">
+                                    <label>Nombre del usuario remitente:</label>
+                                    <input class="form-control" asp-for="@sender.Name" readonly />
+                                </div>
+                            }
+                        }
+                        <div class="col-sm-6">
+                            <label>ID de la cuenta receptora:</label>
+                            <input class="form-control" asp-for="@transfer.IdAccountReceiver" readonly />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Monto:</label>
+                            <input class="form-control" asp-for="@transfer.Amount" readonly />
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Fecha de emisión:</label>
+                            <input class="form-control" asp-for="@transfer.DateIssue" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }          
+    <a class="btn btn-danger" asp-action="Information" style="margin-top: 0.7rem;">Volver</a>
+    
+</body>
