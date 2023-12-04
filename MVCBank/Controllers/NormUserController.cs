@@ -87,16 +87,18 @@ namespace MVCBank.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(User user)
         {
+
             user.IdUser = 0;
-            user.Name = "string";
-            user.Phone = "stringstri";
-            user.DNI= "string";
+            user.Name = user.Name;
+            user.Phone = user.Phone;
+            user.DNI= user.DNI;
 
             user.Role = user.Role.Equals("Cliente") ? "client" : "admin";
 
             var response = await servicioAPI.Crear(user);
+            Console.WriteLine(response.ToString());
 
-            Console.WriteLine(user.Password + "hola");
+                Console.WriteLine(user.Password + "hola");
             if (response != 0)
             {
                 BankAccount account = new BankAccount();

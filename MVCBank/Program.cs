@@ -1,4 +1,6 @@
 using BankSystem.Web.Servicios;
+using Microsoft.Net.Http.Headers;
+
 using MVCBank.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IServicio_API_User, Servicio_API_User>();
 builder.Services.AddScoped<IServicio_API_BAccount, Servicio_API_BAccount>();
 builder.Services.AddScoped<IServicio_API_Transferencia, Servicio_API_Transferencia>();
+
+builder.Services.AddMvc(options =>
+{
+    options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null; // Configuración específica si es necesario
+});
+
 
 
 var app = builder.Build();

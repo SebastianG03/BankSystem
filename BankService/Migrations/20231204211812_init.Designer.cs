@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIBankService.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231204124102_initial")]
-    partial class initial
+    [Migration("20231204211812_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
