@@ -6,11 +6,14 @@ namespace BankSystem.Web.Servicios
     public class Servicio_API_BAccount : IServicio_API_BAccount
     {
         public static string port = "5142";
+        public static string _baseUrl;
+        public HttpClient client;
 
         public async Task<List<BankAccount>> Lista()
         {
             List<BankAccount>? lista = new List<BankAccount>();
-            var client = new HttpClient();
+            client = new HttpClient();
+            _baseUrl = "";
             HttpResponseMessage response = await client.GetAsync($"http://localhost:{port}/api/BankAccount");
 
             if (response.IsSuccessStatusCode)
