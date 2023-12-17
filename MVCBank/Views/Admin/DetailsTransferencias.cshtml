@@ -24,59 +24,11 @@
                             <label>ID de la cuenta remitente:</label>
                             <input class="form-control" asp-for="@transfer.IdAccountSender" readonly />
                         </div>
-                        @{
-                            int idSender = transfer.IdAccountSender;
-                            int idReceiver = transfer.IdAccountReceiver;
-
-                            BankAccount accountSender = accounts.FirstOrDefault(u => u.IdAccount == transfer.IdAccountSender);
-                            BankAccount accountReceiver = accounts.FirstOrDefault(u => u.IdAccount == transfer.IdAccountReceiver);
-
-                            User userSender = users.FirstOrDefault(u => u.IdUser == accountSender.IdUser);
-                            User userReceiver = users.FirstOrDefault(u => u.IdUser == accountReceiver.IdUser);
-
-                            if(transfer.IdAccountSender == accountSender.IdAccount)
-                            {
-                                <div class="col-sm-6">
-                                    <label>Nombre del usuario emisor:</label>
-                                    <input class="form-control" asp-for="@userSender.Name" readonly />
-                                </div>
-                            } else
-                            {
-                                <div class="col-sm-6">
-                                    <label>Nombre del usuario emisor 2:</label>
-                                    <input class="form-control" asp-for="@userReceiver.Name" readonly />
-                                </div>
-                            }
-                        }
+                        
                         <div class="col-sm-6">
                             <label>ID de la cuenta receptora:</label>
                             <input class="form-control" asp-for="@transfer.IdAccountReceiver" readonly />
                         </div>
-                        @{
-                            int idSender2 = transfer.IdAccountSender;
-                            int idReceiver2 = transfer.IdAccountReceiver;
-
-                            BankAccount accountSender2 = accounts.FirstOrDefault(u => u.IdAccount == transfer.IdAccountSender);
-                            BankAccount accountReceiver2 = accounts.FirstOrDefault(u => u.IdAccount == transfer.IdAccountReceiver);
-
-                            User userSender2 = users.FirstOrDefault(u => u.IdUser == accountSender.IdUser);
-                            User userReceiver2 = users.FirstOrDefault(u => u.IdUser == accountReceiver.IdUser);
-
-                            if (transfer.IdAccountSender != accountSender.IdAccount)
-                            {
-                                <div class="col-sm-6">
-                                    <label>Nombre del usuario emisor:</label>
-                                    <input class="form-control" asp-for="@userSender2.Name" readonly />
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-sm-6">
-                                    <label>Nombre del usuario emisor 2:</label>
-                                    <input class="form-control" asp-for="@userReceiver2.Name" readonly />
-                                </div>
-                            }
-                        }
                         <div class="col-sm-6">
                             <label>Monto:</label>
                             <input class="form-control" asp-for="@transfer.Amount" readonly />

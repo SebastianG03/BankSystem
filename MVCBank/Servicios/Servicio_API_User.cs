@@ -9,12 +9,20 @@ namespace BankSystem.Web.Servicios
     
     {
         public static string port = "5142";
+        public HttpClient client;
+        public static string _baseUrl;
+
+        public Servicio_API_User()
+        {
+            client = new HttpClient();
+            _baseUrl = "https://apibankservice20231127083449.azurewebsites.net/";
+            client.BaseAddress = new Uri(_baseUrl);
+        }
 
         public async Task<User> Autenticar(string Email, string Password)
         {
             User user = null;
-            var client = new HttpClient();
-            var response = await client.GetAsync($"http://localhost:5142/api/User/{Email}/{Password}");
+            var response = await client.GetAsync($"/api/User/{Email}/{Password}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -28,8 +36,7 @@ namespace BankSystem.Web.Servicios
             
         {
             int indice = 0;
-            var client = new HttpClient();
-            var response = await client.PostAsJsonAsync("http://localhost:5142/api/User", user);
+            var response = await client.PostAsJsonAsync("/api/User", user);
             indice = await response.Content.ReadAsAsync<int>();
             Console.WriteLine(indice);
             if (response.IsSuccessStatusCode)
@@ -43,16 +50,14 @@ namespace BankSystem.Web.Servicios
 
         public async Task<bool> Eliminar(User user)
         {
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.DeleteAsync($"http://localhost:{port}/api/User/{user.IdUser}");
+            HttpResponseMessage response = await client.DeleteAsync($"/api/User/{user.IdUser}");
 
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> Guardar(User user)
         {
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.PutAsJsonAsync($"http://localhost:{port}/api/User/{user.IdUser}", user);
+            HttpResponseMessage response = await client.PutAsJsonAsync($"/api/User/{user.IdUser}", user);
 
             return response.IsSuccessStatusCode;
         }
@@ -60,8 +65,7 @@ namespace BankSystem.Web.Servicios
         public async Task<List<User>> Lista()
         {
             List<User> lista = new List<User>();
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:{port}/api/User");
+            HttpResponseMessage response = await client.GetAsync($"/api/User");
 
             if (response.IsSuccessStatusCode)
             {
@@ -74,8 +78,7 @@ namespace BankSystem.Web.Servicios
         public async Task<User> Obtener(int IdUser)
         {
             User user = null;
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:{port}/api/User/{IdUser}");
+            HttpResponseMessage response = await client.GetAsync($"/api/User/{IdUser}");
 
             if (response.IsSuccessStatusCode)
             {

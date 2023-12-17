@@ -61,36 +61,12 @@ namespace MVCBank.Controllers
             {
                 List<Transferencia> transfer = await servicio_APITransferencia.Transferencias(bankAccountSender.IdAccount);
 
-
-                List<int> uniqueTransferIdsReceiver = transfer.Select(t => t.IdAccountReceiver).Distinct().ToList();
-                List<int> uniqueTransferIdsSender = transfer.Select(t => t.IdAccountSender).Distinct().ToList();
-                List<int> uniqueTransferIds = uniqueTransferIdsReceiver.Union(uniqueTransferIdsSender).ToList();
-
-                if (uniqueTransferIds != null)
-                {
-                    List<User> users = new List<User>();
-                    List<BankAccount> bankAccounts = new List<BankAccount>();
-
-                    foreach (int transferId in uniqueTransferIds)
-                    {
-                        BankAccount account = await servicio_APIBAccount.Obtener(transferId);
-                        User user = await servicioAPI.Obtener(account.IdUser);
-                        bankAccounts.Add(account);
-                        users.Add(user);
-                    }
-
-                    ViewData["Users"] = users;
-                    ViewData["Accounts"] = bankAccounts;
-
                     return View("DetailsTransferencias", transfer);
-                }
-                else
-                {
-                    return BadRequest("No hay transferencias");
-                }
             }
-
-            return BadRequest("No se pudieron obtener las transferencias");
+            else
+            {
+                return BadRequest("No hay transferencias");
+            }
         }
 
         // POST: AdminController/Create
